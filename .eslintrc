@@ -1,0 +1,48 @@
+{
+    "root": true,
+    "parserOptions": {
+        "ecmaVersion": 2021,
+        "sourceType": "module"
+    },
+    "env": {
+        "node": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:node/recommended",
+        "airbnb-base",
+        "plugin:prettier/recommended", // Make this the last element so prettier config overrides other formatting rules
+        "prettier",
+        "plugin:sonarjs/recommended"
+    ],
+    "plugins": ["simple-import-sort", "sonarjs"],
+    "overrides": [
+        {
+            "files": ["*.js"]
+        }
+    ],
+    "rules": {
+        "prettier/prettier": ["error", {}, {"usePrettierrc": true}],
+
+        "import/no-extraneous-dependencies": [
+            "error",
+            {"devDependencies": true}
+        ],
+
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error",
+
+        "no-unexpected-multiline": "error",
+        "comma-dangle": ["error", "always-multiline"],
+        "linebreak-style": ["error", "unix"],
+
+        "no-plusplus": 0,
+
+        "import/extensions": 0,
+        "import/no-named-as-default": 0,
+
+        "no-console": 0
+        // "react-hooks/exhaustive-deps": 0,  //This rule disables the requirement of specifying all dependencies in dependency arrays in hook rules.
+    }
+}
