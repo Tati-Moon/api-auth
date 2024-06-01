@@ -17,28 +17,19 @@ const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
     },
 });
 
-// const db = {};
-
-// db.Sequelize = Sequelize;
-// db.sequelize = sequelize;
-
-// db.users = require('./user.model.js')(sequelize, Sequelize);
-
 const db = {
     Sequelize,
     sequelize,
-    users: users(sequelize, Sequelize),
-    roles: roles(sequelize, Sequelize),
 
     users: users(sequelize, Sequelize),
     roles: roles(sequelize, Sequelize),
 };
 
 db.roles.belongsToMany(db.users, {
-    through: "user_roles"
-  });
-  db.users.belongsToMany(db.roles, {
-    through: "user_roles"
-  });
+    through: 'user_roles',
+});
+db.users.belongsToMany(db.roles, {
+    through: 'user_roles',
+});
 
 module.exports = db;

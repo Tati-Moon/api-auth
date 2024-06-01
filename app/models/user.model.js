@@ -3,44 +3,40 @@ module.exports = (sequelize, Sequelize) => {
         'user',
         {
             id: {
-                type: Sequelize.INT,
+                type: Sequelize.INTEGER,
+                autoIncrement: true,
                 primaryKey: true,
             },
             fistname: {
-                type: Sequelize.STRING,
+                type: Sequelize.STRING(50),
             },
             lastname: {
-                type: Sequelize.STRING,
+                type: Sequelize.STRING(50),
             },
             email: {
-                type: Sequelize.STRING,
+                type: Sequelize.STRING(100),
             },
             username: {
-                type: Sequelize.STRING,
+                type: Sequelize.STRING(50),
             },
             password: {
-                type: Sequelize.STRING,
+                type: Sequelize.STRING(255),
             },
             phone: {
-                type: Sequelize.STRING,
-            },
-            createdAt: {
-                type: Sequelize.DATE
-            },
-            updatedAt: {
-                type: Sequelize.DATE
+                type: Sequelize.STRING(30),
             },
             loginAttemptsCount: {
-                type: Sequelize.TINYINT
+                type: Sequelize.TINYINT,
+                defaultValue: 0,
             },
             isActive: {
-                type: Sequelize.BOOLEAN
-            },     
+                type: Sequelize.BOOLEAN,
+                defaultValue: 1,
+            },
         },
-
         {
-            createdAt: false,
-            updatedAt: false,
+            createdAt: true,
+            updatedAt: true,
         },
     );
 };

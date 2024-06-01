@@ -3,6 +3,7 @@ const express = require('express');
 const testRoutes = require('./test.routes.js');
 const authRoutes = require('./auth.routes.js');
 const userRoutes = require('./user.routes.js');
+const roleRoutes = require('./role.routes.js');
 
 const apiRouter = () => {
     return express
@@ -28,6 +29,7 @@ const apiRouter = () => {
 
         .use('/auth', authRoutes())
         .use('/user', userRoutes())
+        .use('/role', roleRoutes())
         .use('/test', testRoutes());
 };
 module.exports = apiRouter;

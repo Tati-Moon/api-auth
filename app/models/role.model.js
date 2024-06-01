@@ -4,16 +4,17 @@ module.exports = (sequelize, Sequelize) => {
         {
             id: {
                 type: Sequelize.INTEGER,
-                primaryKey: true
+                autoIncrement: true,
+                primaryKey: true,
             },
             name: {
-                type: Sequelize.STRING,
-            }
+                type: Sequelize.STRING(100),
+                allowNull: false,
+            },
         },
-
         {
-            createdAt: false,
-            updatedAt: false,
+            createdAt: true,
+            updatedAt: true,
         },
     );
 };

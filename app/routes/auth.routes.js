@@ -1,20 +1,20 @@
 const express = require('express');
-const { verifySignUp } = require("../middleware");
-const controller = require("../controllers/auth.controller");
+const {verifyInputValue} = require('../middleware');
+const controller = require('../controllers/auth.controller');
 
 const authRoutes = () => {
     const router = express.Router();
 
     router.post(
-        "/signup",
+        '/registration',
         [
-          verifySignUp.checkDuplicateUsernameOrEmail,
-          verifySignUp.checkRolesExisted
+            verifyInputValue.checkRolesExisted,
+            verifyInputValue.checkInputUserValue,
         ],
-        controller.signup
-      );
-    
-      router.post("/signin", controller.signin);
+        controller.registration,
+    );
+
+    router.post('/signin', controller.signin);
 
     return router;
 };
