@@ -12,7 +12,12 @@ const roleRoutes = () => {
         [verifyInputValue.checkRolesNotExisted],
         roleController.create,
     );
-    router.put('/:id', roleController.update);
+
+    router.put(
+        '/:id',
+        [verifyInputValue.checkRoleNameOnUpdate],
+        roleController.update,
+    );
 
     return router;
 };

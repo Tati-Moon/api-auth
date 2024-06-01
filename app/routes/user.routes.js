@@ -13,10 +13,13 @@ const userRoutes = () => {
         ],
         userController.userRegistration,
     );
-
     router.get('/', userController.getAllWithPagination);
     router.get('/:id', userController.getById);
-    router.put('/:id', userController.update);
+    router.put(
+        '/:id',
+        [verifyInputValue.checkInputUserValueOnUpdate],
+        userController.update,
+    );
     router.patch('/:id', userController.toggleUserActiveStatus);
 
     return router;
