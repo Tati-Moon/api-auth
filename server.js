@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-
 const apiRouter = require('./app/routes');
+const swagger = require('./swagger');
 
 const app = express();
 
@@ -39,6 +39,8 @@ db.sequelize
 // });
 
 app.use('/api-auth/', apiRouter());
+
+swagger(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8088;
