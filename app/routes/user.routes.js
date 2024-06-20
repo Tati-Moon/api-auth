@@ -10,8 +10,8 @@ const userRoutes = () => {
      *     User:
      *       type: object
      *       required:
-     *         - firstname
-     *         - lastname
+     *         - firstName
+     *         - lastName
      *         - username
      *         - password
      *         - phone
@@ -21,9 +21,9 @@ const userRoutes = () => {
      *           type: int
      *           primaryKey: true
      *           autoIncrement: true
-     *         fistname:
+     *         fistName:
      *           type: string
-     *         lastname:
+     *         lastName:
      *           type: string
      *         email:
      *           type: string
@@ -34,7 +34,7 @@ const userRoutes = () => {
      *         phone:
      *           type: string
      *         loginAttemptsCount:
-     *           type: TINYINT
+     *           type: tinyInt
      *           defaultValue: 0
      *         isActive:
      *           type: BOOLEAN
@@ -55,10 +55,10 @@ const userRoutes = () => {
      *           schema:
      *             type: object
      *             properties:
-     *               firstname:
+     *               firstName:
      *                 type: string
      *                 description: The first name of the user
-     *               lastname:
+     *               lastName:
      *                 type: string
      *                 description: The last name of the user
      *               email:
@@ -125,9 +125,9 @@ const userRoutes = () => {
      *                   items:
      *                     type: object
      *                     properties:
-     *                       firstname:
+     *                       firstName:
      *                         type: string
-     *                       lastname:
+     *                       lastName:
      *                         type: string
      *                       email:
      *                         type: string
@@ -171,9 +171,9 @@ const userRoutes = () => {
      *             schema:
      *               type: object
      *               properties:
-     *                 firstname:
+     *                 firstName:
      *                   type: string
-     *                 lastname:
+     *                 lastName:
      *                   type: string
      *                 email:
      *                   type: string
@@ -212,9 +212,9 @@ const userRoutes = () => {
      *           schema:
      *             type: object
      *             properties:
-     *               firstname:
+     *               firstName:
      *                 type: string
-     *               lastname:
+     *               lastName:
      *                 type: string
      *               email:
      *                 type: string
@@ -240,7 +240,10 @@ const userRoutes = () => {
      */
     router.put(
         '/:id',
-        [verifyInputValue.checkInputUserValueOnUpdate],
+        [
+            verifyInputValue.checkInputUserValueOnUpdate,
+            verifyInputValue.checkRolesExisted,
+        ],
         userController.update,
     );
     /**

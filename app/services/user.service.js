@@ -1,11 +1,19 @@
-const db = require('../models');
-const User = db.users;
 const bcrypt = require('bcryptjs');
+const db = require('../models');
+const {getPagination, getPagingData} = require('./utils');
+
+const User = db.users;
 const {Op} = db.Sequelize;
 
+const saltValue = 8;
+
+const normalizePhone = phone => phone.replace(/[\s-()]/g, '');
+
 const createUser = async userData => {
-    userData.password = bcrypt.hashSync(userData.password, 8);
-    const user = await User.create(userData);
+    const newUserData = userData;
+    newUserData.phone = normalizePhone(newUserData.phone);
+    newUserData.password = bcrypt.hashSync(newUserData.password, saltValue);
+    const user = await User.create(newUserData);
     await user.setRoles([1]); // Assign default role
     return user;
 };
@@ -36,9 +44,10 @@ const getUserByUsernameExcludingId = async (username, id) => {
 };
 
 const getUserByPhoneExcludingId = async (phone, id) => {
+    const normalizedPhone = normalizePhone(phone);
     return User.findOne({
         where: {
-            phone,
+            phone: normalizedPhone,
             id: {[Op.ne]: id},
         },
     });
@@ -54,10 +63,15 @@ const getUserByEmailExcludingId = async (email, id) => {
 };
 
 const updateUser = async (id, newData) => {
-    if (newData.password) {
-        newData.password = bcrypt.hashSync(newData.password, 8);
+    const convertedNewData = newData;
+    if (convertedNewData.password) {
+        convertedNewData.password = bcrypt.hashSync(
+            convertedNewData.password,
+            saltValue,
+        );
     }
-    const [updated] = await User.update(newData, {where: {id}});
+    convertedNewData.phone = normalizePhone(convertedNewData.phone);
+    const [updated] = await User.update(convertedNewData, {where: {id}});
     return updated;
 };
 
@@ -66,8 +80,8 @@ const getAllUsers = async (page, size, search) => {
         ? {
               [Op.or]: [
                   {username: {[Op.like]: `%${search}%`}},
-                  {firstname: {[Op.like]: `%${search}%`}},
-                  {lastname: {[Op.like]: `%${search}%`}},
+                  {firstName: {[Op.like]: `%${search}%`}},
+                  {lastName: {[Op.like]: `%${search}%`}},
                   {phone: {[Op.like]: `%${search}%`}},
                   {email: {[Op.like]: `%${search}%`}},
               ],
@@ -89,25 +103,6 @@ const toggleUserActiveStatus = async id => {
     user.isActive = !user.isActive;
     await user.save();
     return user.isActive;
-};
-
-const getPagination = (page, size) => {
-    const limit = size ? +size : 3;
-    const offset = page ? page * limit : 0;
-    return {limit, offset};
-};
-
-const getPagingData = (data, page, limit) => {
-    const {count: totalItems, rows: users} = data;
-    const currentPage = page ? +page : 0;
-    const totalPages = Math.ceil(totalItems / limit);
-
-    return {
-        totalItems,
-        users,
-        totalPages,
-        currentPage,
-    };
 };
 
 module.exports = {

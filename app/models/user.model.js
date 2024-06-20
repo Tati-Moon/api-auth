@@ -7,23 +7,23 @@ module.exports = (sequelize, Sequelize) => {
                 autoIncrement: true,
                 primaryKey: true,
             },
-            fistname: {
-                type: Sequelize.STRING(50),
+            firstName: {
+                type: Sequelize.STRING(100),
             },
-            lastname: {
-                type: Sequelize.STRING(50),
+            lastName: {
+                type: Sequelize.STRING(100),
             },
             email: {
                 type: Sequelize.STRING(100),
             },
             username: {
-                type: Sequelize.STRING(50),
+                type: Sequelize.STRING(100),
             },
             password: {
                 type: Sequelize.STRING(255),
             },
             phone: {
-                type: Sequelize.STRING(30),
+                type: Sequelize.STRING(100),
             },
             loginAttemptsCount: {
                 type: Sequelize.TINYINT,

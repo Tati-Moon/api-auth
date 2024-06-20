@@ -35,10 +35,10 @@ const authRoutes = () => {
      *           schema:
      *             type: object
      *             properties:
-     *               firstname:
+     *               firstName:
      *                 type: string
      *                 example: Test
-     *               lastname:
+     *               lastName:
      *                 type: string
      *                 example: Test
      *               email:
@@ -97,10 +97,10 @@ const authRoutes = () => {
         controller.registration,
     );
 
-    // Signin user
+    // SignIn user
     /**
      * @swagger
-     * /api-auth/auth/signin:
+     * /api-auth/auth/signIn:
      *   post:
      *     summary: Sign in a user
      *     tags: [Authentication]
@@ -141,7 +141,7 @@ const authRoutes = () => {
      *                   example: ["ROLE_USER", "ROLE_MODERATOR","ROLE_ADMIN"]
      *                 accessToken:
      *                   type: string
-     *                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+     *                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6Ikp9..."
      *       400:
      *         description: Invalid username or password
      *         content:

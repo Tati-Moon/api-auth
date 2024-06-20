@@ -1,22 +1,26 @@
-const db = require('../models');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
 const config = require('../config/auth.config');
 const RoleService = require('../services/role.service');
 const UserService = require('../services/user.service');
-var jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
+const {validateUserRegistration} = require('../validators/validator');
 
-exports.registration = async (req, res) => {
-    try {
-        const user = await UserService.createUser(req.body);
-        if (req.body.roles) {
-            const roles = await RoleService.getRolesByName(req.body.roles);
-            await user.setRoles(roles);
+exports.registration = [
+    validateUserRegistration,
+    async (req, res) => {
+        try {
+            const user = await UserService.createUser(req.body);
+            if (req.body.roles) {
+                const roles = await RoleService.getRolesByName(req.body.roles);
+                await user.setRoles(roles);
+            }
+            res.send({message: 'User was registered successfully!'});
+        } catch (err) {
+            res.status(500).send({message: err.message});
         }
-        res.send({message: 'User was registered successfully!'});
-    } catch (err) {
-        res.status(500).send({message: err.message});
-    }
-};
+    },
+];
 
 exports.signin = async (req, res) => {
     try {
@@ -65,10 +69,10 @@ exports.signin = async (req, res) => {
 
         const roles = await user.getRoles();
         const authorities = roles.map(
-            role => 'ROLE_' + role.name.toUpperCase(),
+            role => `ROLE_${role.name.toUpperCase()}`,
         );
 
-        res.status(200).send({
+        return res.status(200).send({
             id: user.id,
             username: user.username,
             email: user.email,
@@ -76,6 +80,6 @@ exports.signin = async (req, res) => {
             accessToken: token,
         });
     } catch (err) {
-        res.status(500).send({message: err.message});
+        return res.status(500).send({message: err.message});
     }
 };

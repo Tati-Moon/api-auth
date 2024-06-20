@@ -36,9 +36,9 @@ const checkInputUserValue = async (req, res, next) => {
             }
         }
 
-        next();
+        return next();
     } catch (error) {
-        next(error);
+        return next(error);
     }
 };
 
@@ -88,9 +88,9 @@ const checkInputUserValueOnUpdate = async (req, res, next) => {
             }
         }
 
-        next();
+        return next();
     } catch (error) {
-        next(error);
+        return next(error);
     }
 };
 
@@ -113,9 +113,9 @@ const checkRolesExisted = async (req, res, next) => {
             });
         }
 
-        next();
+        return next();
     } catch (error) {
-        next(error);
+        return next(error);
     }
 };
 
@@ -132,9 +132,9 @@ const checkRolesNotExisted = async (req, res, next) => {
             });
         }
 
-        next();
+        return next();
     } catch (error) {
-        next(error);
+        return next(error);
     }
 };
 
@@ -168,9 +168,9 @@ const checkRoleNameOnUpdate = async (req, res, next) => {
             });
         }
 
-        next();
+        return next();
     } catch (error) {
-        next(error);
+        return next(error);
     }
 };
 

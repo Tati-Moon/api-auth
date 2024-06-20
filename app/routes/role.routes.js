@@ -19,9 +19,9 @@ const roleRoutes = () => {
      *         name:
      *           type: string
      *         createdAt:
-     *           type: datetime
+     *           type: dateTime
      *         updatedAt:
-     *           type: datetime
+     *           type: dateTime
      */
     const router = express.Router();
     /**

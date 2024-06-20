@@ -1,13 +1,17 @@
 const UserService = require('../services/user.service');
+const {validateUserRegistration} = require('../validators/validator');
 
-exports.userRegistration = async (req, res) => {
-    try {
-        await UserService.createUser(req.body);
-        res.send({message: 'User was registered successfully!'});
-    } catch (err) {
-        res.status(500).send({message: err.message});
-    }
-};
+exports.userRegistration = [
+    validateUserRegistration,
+    async (req, res) => {
+        try {
+            await UserService.createUser(req.body);
+            res.send({message: 'User was registered successfully!'});
+        } catch (err) {
+            res.status(500).send({message: err.message});
+        }
+    },
+];
 
 exports.getAllWithPagination = async (req, res) => {
     try {
